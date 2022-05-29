@@ -1,18 +1,26 @@
 package main
 
 import (
-	ctrl "users/controllers"
-
 	"github.com/gin-gonic/gin"
+
+	"users/controllers"
+)
+
+var (
+	userAPI controllers.UserAPI
 )
 
 const (
 	apiPathPrefix = "/api/users"
 )
 
+func init() {
+	userAPI = controllers.NewUserAPI()
+}
+
 func initRouters(engine *gin.Engine) {
 	group := engine.Group(apiPathPrefix)
 	{
-		group.GET("", ctrl.ListUsers)
+		group.GET("", userAPI.ListAll)
 	}
 }
