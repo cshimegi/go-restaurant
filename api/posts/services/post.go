@@ -12,16 +12,16 @@ type PostService interface {
 	ListAll(c *gin.Context) ([]domain.Post, error)
 }
 
-// postServiceImpl is interface of user service
-type postServiceImpl struct{}
+// PostServiceImpl is implementation of post service
+type PostServiceImpl struct{}
 
 // NewPostService is used to instantiate postService
-func NewPostService() PostService {
-	return &postServiceImpl{}
+func NewPostService() *PostServiceImpl {
+	return &PostServiceImpl{}
 }
 
 // ListAll lists all posts
-func (p postServiceImpl) ListAll(c *gin.Context) ([]domain.Post, error) {
+func (p PostServiceImpl) ListAll(c *gin.Context) ([]domain.Post, error) {
 	post := domain.Post{
 		ID:     1,
 		UserID: 1,

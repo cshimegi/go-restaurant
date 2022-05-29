@@ -19,19 +19,19 @@ type PostAPI interface {
 }
 
 // PostController defines type of post controller
-type postController struct{}
+type PostController struct{}
 
 func init() {
 	postService = services.NewPostService()
 }
 
 // NewPostAPI defines api paths to post service
-func NewPostAPI() PostAPI {
-	return &postController{}
+func NewPostAPI() *PostController {
+	return &PostController{}
 }
 
 // ListAll lists all posts
-func (p postController) ListAll(c *gin.Context) {
+func (p PostController) ListAll(c *gin.Context) {
 	posts, err := postService.ListAll(c)
 
 	if err != nil {

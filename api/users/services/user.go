@@ -6,21 +6,21 @@ import (
 	"users/shared/domain"
 )
 
-// UserService is struct of user service
+// UserService is interface of user service
 type UserService interface {
 	ListAll(c *gin.Context) ([]domain.User, error)
 }
 
-// userServiceImpl is struct of user service
-type userServiceImpl struct{}
+// UserServiceImpl is implementation of user service
+type UserServiceImpl struct{}
 
-// NewUserService is used to instantiate userService
-func NewUserService() UserService {
-	return &userServiceImpl{}
+// NewUserService is implementaion of user service
+func NewUserService() *UserServiceImpl {
+	return &UserServiceImpl{}
 }
 
 // ListAll lists all users
-func (u userServiceImpl) ListAll(c *gin.Context) ([]domain.User, error) {
+func (u UserServiceImpl) ListAll(c *gin.Context) ([]domain.User, error) {
 	user := domain.User{
 		ID:       1,
 		FirtName: "Test",

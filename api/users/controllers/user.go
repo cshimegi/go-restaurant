@@ -19,19 +19,19 @@ type UserAPI interface {
 }
 
 // UserController defines user's controller
-type userController struct{}
+type UserController struct{}
 
 func init() {
 	userService = services.NewUserService()
 }
 
 // NewUserAPI defines api paths to user service
-func NewUserAPI() UserAPI {
-	return &userController{}
+func NewUserAPI() *UserController {
+	return &UserController{}
 }
 
 // ListAll lists all users
-func (u userController) ListAll(c *gin.Context) {
+func (u UserController) ListAll(c *gin.Context) {
 	users, err := userService.ListAll(c)
 
 	if err != nil {
