@@ -1,0 +1,26 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: blog-ingress
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+    kubernetes.io/ingress.class: ingress-nginx
+spec:
+  rules:
+  - host: localhost
+    http:
+      paths:
+      - pathType: Prefix
+        path: /api/users
+        backend:
+          service:
+            name: blog-user-service
+            port:
+              number: 80
+      - pathType: Prefix
+        path: /api/posts
+        backend:
+          service:
+            name: blog-post-service
+            port:
+              number: 80

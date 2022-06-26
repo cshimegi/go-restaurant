@@ -1,16 +1,15 @@
 ARG GO_VERSION
-
-FROM golang:${GO_VERSION}-alpine
-
-WORKDIR /app
+FROM golang:${GO_VERSION}-alpine AS builder
+WORKDIR /go/src/service
 
 ARG SERVICE_NAME
+COPY ../../api /go/src/service
+RUN cd  /go/src/service/${SERVICE_NAME} && \
+    go mod download && \
+    CGO_ENABLED=0 GOOS=linux go build -o /bin/server
 
-COPY ../../api/${SERVICE_NAME} /app/
 
-RUN go mod download && \
-    go build -o /${SERVICE_NAME}
-
-EXPOSE 8080
-
-CMD ["/${SERVICE_NAME}" ]
+FROM scratch AS final
+COPY --from=builder /bin/server /bin/server
+EXPOSE 8000
+ENTRYPOINT ["/bin/server" ]

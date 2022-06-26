@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cshimegi-blog-user
+  namespace: cshimegi-blog-local
+  labels:
+    app: blog-user-deploy
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: blog-user-deploy
+  template:
+    metadata:
+      labels:
+        app: blog-user-deploy
+    spec:
+      containers:
+      - name: blog-user-deploy
+        image: cshimegi/blog-users:latest
+        imagePullPolicy: IfNotPresent
+        ports:
+          - containerPort: 8000
