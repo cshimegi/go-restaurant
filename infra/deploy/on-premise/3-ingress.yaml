@@ -1,11 +1,10 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
+  namespace: cshimegi-blog-local
   name: blog-ingress
-  annotations:
-    nginx.ingress.kubernetes.io/rewrite-target: /
-    kubernetes.io/ingress.class: ingress-nginx
 spec:
+  ingressClassName: nginx
   rules:
   - host: localhost
     http:
