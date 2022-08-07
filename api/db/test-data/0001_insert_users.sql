@@ -1,0 +1,2 @@
+INSERT IGNORE INTO users VALUES (1, 'Alan', 'Chan', 'Alan Chan', 'xxx@hotmail.com', 'testtest', 1, '2022-07-25 12:34:56', '2022-07-25 12:34:56');
+INSERT IGNORE INTO users VALUES (2, 'Test', 'Admin', 'Administrator', 'admin@hotmail.com', 'adminadmin', 9, '2022-07-25 12:34:56', '2022-07-25 12:34:56');

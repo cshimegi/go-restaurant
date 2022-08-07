@@ -4,13 +4,14 @@ import (
 	"fmt"
 	"net/http"
 
-	"github.com/gin-gonic/gin"
-
+	"posts/dao"
 	"posts/services"
+
+	"github.com/gin-gonic/gin"
 )
 
 var (
-	postService services.PostService
+	postService *services.PostService
 )
 
 // PostAPI is the interface for post API
@@ -22,7 +23,9 @@ type PostAPI interface {
 type PostController struct{}
 
 func init() {
-	postService = services.NewPostService()
+	postStore := dao.NewPostStore()
+	dao.MigrateSchema(*postStore.DB)
+	postService = services.NewPostService(postStore)
 }
 
 // NewPostAPI defines api paths to post service

@@ -1,9 +1,9 @@
 package main
 
 import (
-	"github.com/gin-gonic/gin"
-
 	"posts/controllers"
+
+	"github.com/gin-gonic/gin"
 )
 
 var (

@@ -1,39 +1,29 @@
 package services
 
 import (
-	"github.com/gin-gonic/gin"
-
+	"posts/dao"
 	"posts/shared/domain"
-	userDomain "users/shared/domain"
+
+	"github.com/gin-gonic/gin"
 )
 
-// PostService is interface of postServiceImpl
-type PostService interface {
-	ListAll(c *gin.Context) ([]domain.Post, error)
+// PostService is implementation of post service
+type PostService struct {
+	store dao.IPostStore
 }
 
-// PostServiceImpl is implementation of post service
-type PostServiceImpl struct{}
-
 // NewPostService is used to instantiate postService
-func NewPostService() *PostServiceImpl {
-	return &PostServiceImpl{}
+func NewPostService(store dao.IPostStore) *PostService {
+	return &PostService{
+		store: store,
+	}
 }
 
 // ListAll lists all posts
-func (p PostServiceImpl) ListAll(c *gin.Context) ([]domain.Post, error) {
-	post := domain.Post{
-		ID:     1,
-		UserID: 1,
-		User: userDomain.User{
-			ID:       1,
-			FirtName: "Test",
-			LastName: "Me",
-			Nickname: "",
-		},
+func (p PostService) ListAll(c *gin.Context) ([]domain.Post, error) {
+	posts, err := p.store.ListAll(c)
+	if err != nil {
+		panic(err)
 	}
-
-	return []domain.Post{
-		post,
-	}, nil
+	return posts, nil
 }

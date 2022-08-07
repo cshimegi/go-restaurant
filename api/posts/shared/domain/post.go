@@ -10,9 +10,9 @@ import (
 type Post struct {
 	ID        uint `json:"id" gorm:"primaryKey;"`
 	UserID    uint
-	User      userDomain.User `gorm:"foreignKey:UserID; references:ID; constraint:OnUpdate:CASCADE,OnDelete:CASCADE;"`
-	Title     string          `json:"title"`
-	Content   string          `json:"content"`
-	CreatedAt time.Time
-	UpdatedAt time.Time
+	User      userDomain.User `validate:"required,user" gorm:"foreignKey:UserID; references:ID; constraint:OnDelete:CASCADE;"`
+	Title     string          `json:"title" validate:"required,title" gorm:"not null"`
+	Content   string          `json:"content" validate:"required,content" gorm:"not null"`
+	CreatedAt time.Time       `json:"createdAt"`
+	UpdatedAt time.Time       `json:"updatedAt"`
 }
