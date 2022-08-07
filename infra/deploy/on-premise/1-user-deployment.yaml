@@ -15,9 +15,16 @@ spec:
       labels:
         app: blog-user-deploy
     spec:
+      initContainers:
+      - name: wait-for-db-before-startup
+        image: busybox
+        command:  ["sh", "-c", "until nc -z blog-db-service 3306 > /dev/null; do echo Waiting for master; sleep 2; done;"]
       containers:
       - name: blog-user-deploy
         image: cshimegi/blog-users:latest
         imagePullPolicy: IfNotPresent
         ports:
           - containerPort: 8000
+        envFrom:
+        - configMapRef:
+            name: blog-config

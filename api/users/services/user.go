@@ -1,34 +1,29 @@
 package services
 
 import (
-	"github.com/gin-gonic/gin"
-
+	"users/dao"
 	"users/shared/domain"
+
+	"github.com/gin-gonic/gin"
 )
 
-// UserService is interface of user service
-type UserService interface {
-	ListAll(c *gin.Context) ([]domain.User, error)
+// UserService is implementation of user service
+type UserService struct {
+	store dao.IUserStore
 }
 
-// UserServiceImpl is implementation of user service
-type UserServiceImpl struct{}
-
 // NewUserService is implementaion of user service
-func NewUserService() *UserServiceImpl {
-	return &UserServiceImpl{}
+func NewUserService(store dao.IUserStore) *UserService {
+	return &UserService{
+		store: store,
+	}
 }
 
 // ListAll lists all users
-func (u UserServiceImpl) ListAll(c *gin.Context) ([]domain.User, error) {
-	user := domain.User{
-		ID:       1,
-		FirtName: "Test",
-		LastName: "Me",
-		Nickname: "",
+func (u *UserService) ListAll(c *gin.Context) ([]domain.User, error) {
+	users, err := u.store.ListAll(c)
+	if err != nil {
+		panic(err)
 	}
-
-	return []domain.User{
-		user,
-	}, nil
+	return users, nil
 }

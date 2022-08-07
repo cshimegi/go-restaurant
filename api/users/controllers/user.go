@@ -4,13 +4,14 @@ import (
 	"fmt"
 	"net/http"
 
-	"github.com/gin-gonic/gin"
-
+	"users/dao"
 	"users/services"
+
+	"github.com/gin-gonic/gin"
 )
 
 var (
-	userService services.UserService
+	userService *services.UserService
 )
 
 // UserAPI is the interface for user API
@@ -22,7 +23,9 @@ type UserAPI interface {
 type UserController struct{}
 
 func init() {
-	userService = services.NewUserService()
+	userStore := dao.NewUserStore()
+	dao.MigrateSchema(*userStore.DB)
+	userService = services.NewUserService(userStore)
 }
 
 // NewUserAPI defines api paths to user service
