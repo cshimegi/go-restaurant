@@ -1,9 +1,9 @@
-package main
+package users
 
 import (
-	"users/controllers"
-
 	"github.com/gin-gonic/gin"
+
+	"alan/blog/users/controllers"
 )
 
 var (
@@ -18,7 +18,7 @@ func init() {
 	userAPI = controllers.NewUserAPI()
 }
 
-func initRouters(engine *gin.Engine) {
+func InitRouters(engine *gin.Engine) {
 	group := engine.Group(apiPathPrefix)
 	{
 		group.GET("", userAPI.ListAll)

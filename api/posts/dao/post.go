@@ -1,10 +1,10 @@
 package dao
 
 import (
-	"posts/shared/domain"
-
 	"github.com/gin-gonic/gin"
 	"gorm.io/gorm"
+
+	"alan/blog/posts/shared/domain"
 )
 
 // IPostStore is interface of post store

@@ -1,2 +1,0 @@
-INSERT IGNORE INTO posts VALUES (1, 1, 'test-title', 'It is Alan first post.', '2022-07-25 18:34:56', '2022-07-25 18:34:56');
-INSERT IGNORE INTO posts VALUES (2, 1, 'What should be good?', 'Time is river. Maybe you should go along with it.', '2022-07-25 18:44:56', '2022-07-25 18:44:56');

@@ -1,10 +1,10 @@
 package services
 
 import (
-	"posts/dao"
-	"posts/shared/domain"
-
 	"github.com/gin-gonic/gin"
+
+	"alan/blog/posts/dao"
+	"alan/blog/posts/shared/domain"
 )
 
 // PostService is implementation of post service

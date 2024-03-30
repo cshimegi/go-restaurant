@@ -1,0 +1,31 @@
+services:
+  blog-mono:
+    image: cshimegi/blog-mono:latest
+    ports:
+      - "8080:8080"
+    environment:
+      DB_PASS: secret
+      DB_USER: cshimegi
+      DB_NAME: blog
+      DB_HOST: blog-db-service
+      DB_PORT: 3306
+    depends_on:
+      blog-db-service:
+        condition: service_healthy
+  blog-db-service:
+    image: mysql:8.3.0
+    platform: linux/x86_64
+    environment:
+      MYSQL_ROOT_PASSWORD: ahfwLEenAasASddkf==
+      MYSQL_PASSWORD: secret
+      MYSQL_USER: cshimegi
+      MYSQL_DATABASE: blog
+      LANG: C.UTF-8
+    ports:
+      - "3306:3306"
+    healthcheck:
+      test: mysqladmin ping -h 127.0.0.1 -u $$MYSQL_USER --password=$$MYSQL_PASSWORD
+      interval: 10s
+      timeout: 20s
+      retries: 10
+      start_period: 10s

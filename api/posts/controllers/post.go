@@ -4,10 +4,10 @@ import (
 	"fmt"
 	"net/http"
 
-	"posts/dao"
-	"posts/services"
-
 	"github.com/gin-gonic/gin"
+
+	"alan/blog/posts/dao"
+	"alan/blog/posts/services"
 )
 
 var (
@@ -24,7 +24,7 @@ type PostController struct{}
 
 func init() {
 	postStore := dao.NewPostStore()
-	dao.MigrateSchema(*postStore.DB)
+	//dao.MigrateSchema(*postStore.DB)
 	postService = services.NewPostService(postStore)
 }
 

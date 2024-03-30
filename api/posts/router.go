@@ -1,9 +1,9 @@
-package main
+package posts
 
 import (
-	"posts/controllers"
-
 	"github.com/gin-gonic/gin"
+
+	"alan/blog/posts/controllers"
 )
 
 var (
@@ -18,7 +18,7 @@ func init() {
 	postAPI = controllers.NewPostAPI()
 }
 
-func initRouters(engine *gin.Engine) {
+func InitRouters(engine *gin.Engine) {
 	group := engine.Group(apiPathPrefix)
 	{
 		group.GET("", postAPI.ListAll)

@@ -4,10 +4,10 @@ import (
 	"fmt"
 	"net/http"
 
-	"users/dao"
-	"users/services"
-
 	"github.com/gin-gonic/gin"
+
+	"alan/blog/users/dao"
+	"alan/blog/users/services"
 )
 
 var (
@@ -24,7 +24,6 @@ type UserController struct{}
 
 func init() {
 	userStore := dao.NewUserStore()
-	dao.MigrateSchema(*userStore.DB)
 	userService = services.NewUserService(userStore)
 }
 
