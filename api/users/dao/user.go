@@ -1,10 +1,10 @@
 package dao
 
 import (
-	"users/shared/domain"
-
 	"github.com/gin-gonic/gin"
 	"gorm.io/gorm"
+
+	"alan/blog/users/shared/domain"
 )
 
 // IUserStore is interface of user store

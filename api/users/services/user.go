@@ -1,10 +1,10 @@
 package services
 
 import (
-	"users/dao"
-	"users/shared/domain"
-
 	"github.com/gin-gonic/gin"
+
+	"alan/blog/users/dao"
+	"alan/blog/users/shared/domain"
 )
 
 // UserService is implementation of user service
@@ -12,7 +12,7 @@ type UserService struct {
 	store dao.IUserStore
 }
 
-// NewUserService is implementaion of user service
+// NewUserService is implementation of user service
 func NewUserService(store dao.IUserStore) *UserService {
 	return &UserService{
 		store: store,
