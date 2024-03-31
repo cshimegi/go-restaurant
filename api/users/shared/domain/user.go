@@ -1,17 +1,16 @@
 package domain
 
 import (
-	"time"
+	sm "alan/blog/shared/models"
 )
 
 // User defines user model
 type User struct {
-	ID        uint      `json:"id" gorm:"primaryKey;"`
-	FirstName string    `json:"first_name" validate:"required,first_name" gorm:"not null"`
-	LastName  string    `json:"last_name" validate:"required,last_name" gorm:"not null"`
-	Nickname  string    `json:"nickname"`
-	Email     string    `json:"email" validate:"required,email" gorm:"unique;not null"`
-	Password  string    `json:"password" validate:"required" gorm:"not null"`
-	CreatedAt time.Time `json:"createdAt"`
-	UpdatedAt time.Time `json:"updatedAt"`
+	ID           uint   `json:"id" gorm:"primaryKey;not null"`
+	FirstName    string `json:"first_name" validate:"required" gorm:"not null"`
+	LastName     string `json:"last_name" validate:"required" gorm:"not null"`
+	Nickname     string `json:"nickname"`
+	Email        string `json:"email" gorm:"unique;not null"`
+	Password     string `json:"password" validate:"required" gorm:"not null"`
+	sm.BaseModel `gorm:"embedded"`
 }
