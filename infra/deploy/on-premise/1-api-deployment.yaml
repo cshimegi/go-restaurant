@@ -1,23 +1,29 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: cshimegi-blog-post
-  namespace: cshimegi-blog-local
+  name: cshimegi-blog-api
   labels:
-    app: blog-post-deploy
+    app: blog-api
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: blog-post-deploy
+      app: blog-api-deploy
   template:
     metadata:
       labels:
-        app: blog-post-deploy
+        app: blog-api-deploy
     spec:
+      initContainers:
+        - name: wait-for-init-db
+          image: busybox
+          command:
+            - sh
+            - -c
+            - "until nc -zv blog-db-service 3306; do sleep 5; done"
       containers:
       - name: blog-post-deploy
-        image: cshimegi/blog-posts:latest
+        image: cshimegi/blog-mono:latest
         imagePullPolicy: IfNotPresent
         ports:
           - containerPort: 8080
