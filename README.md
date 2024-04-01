@@ -24,7 +24,7 @@ $ docker-compose up -d
 ./migrate -source file://./migrations -database "mysql://$DB_USER:$DB_PASS@tcp($DB_HOST:$DB_PORT)/$DB_NAME" up
 ```
 
-## APIs
+## API Calls with using docker-compose
 ```shell
 # User API Endpoint
 $ curl -v http://127.0.0.1:<port>/api/users
@@ -33,5 +33,16 @@ $ curl -v http://127.0.0.1:<port>/api/users
 $ curl -v http://127.0.0.1:<port>/api/posts
 ```
 
+## API Calls with using k3s
+- nginx ingress controller is required
+```shell
+# User API Endpoint
+$ curl -v http://localhost/api/users
+
+# Post API Endpoint
+$ curl -v http://localhost/api/posts
+```
+
 ## Reference
 - [golang-migrate usage](https://github.com/golang-migrate/migrate/tree/master/cmd/migrate#usage)
+- [nginx ingress controller on k3s](https://medium.com/@alesson.viana/installing-the-nginx-ingress-controller-on-k3s-df2c68cae3c8)

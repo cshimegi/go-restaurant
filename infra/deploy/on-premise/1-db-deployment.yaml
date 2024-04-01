@@ -2,9 +2,8 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: cshimegi-blog-db
-  namespace: cshimegi-blog-local
   labels:
-    app: blog-db-deploy
+    app: blog-db
 spec:
   selector:
     matchLabels:
@@ -15,7 +14,7 @@ spec:
         app: blog-db-deploy
     spec:
       containers:
-        - image: cshimegi/blog-db:latest
+        - image: mysql:8.3.0
           name: blog-db-deploy
           imagePullPolicy: IfNotPresent
           env:
@@ -46,4 +45,4 @@ spec:
                   key: DB_LANG
           ports:
             - containerPort: 3306
-              name: mysql
+              name: http-mysql

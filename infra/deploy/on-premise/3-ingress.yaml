@@ -1,7 +1,6 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  namespace: cshimegi-blog-local
   name: blog-ingress
 spec:
   ingressClassName: nginx
@@ -10,16 +9,9 @@ spec:
     http:
       paths:
       - pathType: Prefix
-        path: /api/users
+        path: /api
         backend:
           service:
-            name: blog-user-service
-            port:
-              number: 80
-      - pathType: Prefix
-        path: /api/posts
-        backend:
-          service:
-            name: blog-post-service
+            name: blog-api-service
             port:
               number: 80
