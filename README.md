@@ -25,12 +25,15 @@ $ docker-compose up -d
 ```
 
 ## API Calls with using docker-compose
+- For ARM machine, you can use colima like this to ensure the env setup is workable for other arch machines
+  - **colima start -p x86 --arch x86_64 --with-kubernetes**
+  - If you use **--network-address** option as well, you will have to use ip address (127.0.0.1) instead
 ```shell
 # User API Endpoint
-$ curl -v http://127.0.0.1:<port>/api/users
+$ curl -v http://localhost:<port>/api/users
 
 # Post API Endpoint
-$ curl -v http://127.0.0.1:<port>/api/posts
+$ curl -v http://localhost:<port>/api/posts
 ```
 
 ## API Calls with using k3s
