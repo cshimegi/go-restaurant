@@ -4,10 +4,12 @@ import (
 	"github.com/gin-gonic/gin"
 
 	"alan/blog/users/controllers"
+	"alan/blog/users/dao"
+	"alan/blog/users/services"
 )
 
 var (
-	userAPI controllers.UserAPI
+	controller controllers.UserController
 )
 
 const (
@@ -15,12 +17,14 @@ const (
 )
 
 func init() {
-	userAPI = controllers.NewUserAPI()
+	store := dao.NewUserStore()
+	service := services.NewUserService(store)
+	controller = controllers.NewUserController(service)
 }
 
 func InitRouters(engine *gin.Engine) {
 	group := engine.Group(apiPathPrefix)
 	{
-		group.GET("", userAPI.ListAll)
+		group.GET("", controller.ListAll)
 	}
 }

@@ -7,11 +7,6 @@ import (
 	"alan/blog/users/shared/domain"
 )
 
-// IUserStore is interface of user store
-type IUserStore interface {
-	ListAll(c *gin.Context) ([]domain.User, error)
-}
-
 // UserStore is implementation of user store
 type UserStore struct {
 	DB *gorm.DB

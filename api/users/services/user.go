@@ -3,17 +3,21 @@ package services
 import (
 	"github.com/gin-gonic/gin"
 
-	"alan/blog/users/dao"
 	"alan/blog/users/shared/domain"
 )
 
+// IUserStore is interface of user store
+type IUserStore interface {
+	ListAll(c *gin.Context) ([]domain.User, error)
+}
+
 // UserService is implementation of user service
 type UserService struct {
-	store dao.IUserStore
+	store IUserStore
 }
 
 // NewUserService is implementation of user service
-func NewUserService(store dao.IUserStore) *UserService {
+func NewUserService(store IUserStore) *UserService {
 	return &UserService{
 		store: store,
 	}

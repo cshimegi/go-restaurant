@@ -1,13 +1,15 @@
 package posts
 
 import (
+	"alan/blog/posts/dao"
+	"alan/blog/posts/services"
 	"github.com/gin-gonic/gin"
 
 	"alan/blog/posts/controllers"
 )
 
 var (
-	postAPI controllers.PostAPI
+	controller controllers.PostController
 )
 
 const (
@@ -15,12 +17,14 @@ const (
 )
 
 func init() {
-	postAPI = controllers.NewPostAPI()
+	store := dao.NewPostStore()
+	service := services.NewPostService(store)
+	controller = controllers.NewPostController(service)
 }
 
 func InitRouters(engine *gin.Engine) {
 	group := engine.Group(apiPathPrefix)
 	{
-		group.GET("", postAPI.ListAll)
+		group.GET("", controller.ListAll)
 	}
 }
