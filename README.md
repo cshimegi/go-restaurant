@@ -34,6 +34,10 @@ $ curl -v http://localhost:<port>/api/users
 
 # Post API Endpoint
 $ curl -v http://localhost:<port>/api/posts
+
+# Health API Endpoint
+$ curl -v http://localhost:<port>/api/health
+$ curl -v http://localhost:<port>/api/health/all
 ```
 
 ## API Calls with using k3s
@@ -44,8 +48,13 @@ $ curl -v http://localhost/api/users
 
 # Post API Endpoint
 $ curl -v http://localhost/api/posts
+
+# Health API Endpoint
+$ curl -v http://localhost/api/health
+$ curl -v http://localhost/api/health/all
 ```
 
 ## Reference
 - [golang-migrate usage](https://github.com/golang-migrate/migrate/tree/master/cmd/migrate#usage)
 - [nginx ingress controller on k3s](https://medium.com/@alesson.viana/installing-the-nginx-ingress-controller-on-k3s-df2c68cae3c8)
+- [colima localhost/ip address](https://github.com/abiosoft/colima/issues/562#issuecomment-1371331348)

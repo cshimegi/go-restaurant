@@ -4,10 +4,12 @@ import (
 	"github.com/gin-gonic/gin"
 
 	"alan/blog/health/controllers"
+	"alan/blog/health/dao"
+	"alan/blog/health/services"
 )
 
 var (
-	healthAPI controllers.HealthAPI
+	controller controllers.HealthController
 )
 
 const (
@@ -15,13 +17,15 @@ const (
 )
 
 func init() {
-	healthAPI = controllers.NewHealthAPI()
+	store := dao.NewHealthStore()
+	service := services.NewHealthService(store)
+	controller = controllers.NewHealthController(service)
 }
 
 func InitRouters(engine *gin.Engine) {
 	group := engine.Group(apiPathPrefix)
 	{
-		group.GET("", healthAPI.Retrieve)
-		group.GET("/all", healthAPI.ListAll)
+		group.GET("", controller.Retrieve)
+		group.GET("/all", controller.ListAll)
 	}
 }

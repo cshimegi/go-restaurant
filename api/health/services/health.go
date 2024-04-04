@@ -3,17 +3,22 @@ package services
 import (
 	"github.com/gin-gonic/gin"
 
-	"alan/blog/health/dao"
 	"alan/blog/health/domain"
 )
 
+// IHealthStore is interface of health store
+type IHealthStore interface {
+	Retrieve(c *gin.Context) (domain.ApiInfo, error)
+	ListAll(c *gin.Context) ([]domain.ApiInfo, error)
+}
+
 // HealthService is implementation of user service
 type HealthService struct {
-	store dao.IHealthStore
+	store IHealthStore
 }
 
 // NewHealthService is implementation of user service
-func NewHealthService(store dao.IHealthStore) *HealthService {
+func NewHealthService(store IHealthStore) *HealthService {
 	return &HealthService{
 		store: store,
 	}

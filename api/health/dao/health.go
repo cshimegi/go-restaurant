@@ -7,12 +7,6 @@ import (
 	"alan/blog/health/domain"
 )
 
-// IHealthStore is interface of health store
-type IHealthStore interface {
-	Retrieve(c *gin.Context) (domain.ApiInfo, error)
-	ListAll(c *gin.Context) ([]domain.ApiInfo, error)
-}
-
 // HealthStore is implementation of user store
 type HealthStore struct {
 	DB *gorm.DB

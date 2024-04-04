@@ -6,35 +6,29 @@ import (
 
 	"github.com/gin-gonic/gin"
 
-	"alan/blog/users/dao"
-	"alan/blog/users/services"
+	"alan/blog/users/shared/domain"
 )
 
-var (
-	userService *services.UserService
-)
-
-// UserAPI is the interface for user API
-type UserAPI interface {
-	ListAll(c *gin.Context)
+// IUserService is the interface for user API
+type IUserService interface {
+	ListAll(c *gin.Context) ([]domain.User, error)
 }
 
 // UserController defines user's controller
-type UserController struct{}
-
-func init() {
-	userStore := dao.NewUserStore()
-	userService = services.NewUserService(userStore)
+type UserController struct {
+	svc IUserService
 }
 
-// NewUserAPI defines api paths to user service
-func NewUserAPI() *UserController {
-	return &UserController{}
+// NewUserController defines api paths to user service
+func NewUserController(svc IUserService) UserController {
+	return UserController{
+		svc: svc,
+	}
 }
 
 // ListAll lists all users
-func (u UserController) ListAll(c *gin.Context) {
-	users, err := userService.ListAll(c)
+func (u *UserController) ListAll(c *gin.Context) {
+	users, err := u.svc.ListAll(c)
 
 	if err != nil {
 		// TODO: use logrus

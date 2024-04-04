@@ -7,11 +7,6 @@ import (
 	"alan/blog/posts/shared/domain"
 )
 
-// IPostStore is interface of post store
-type IPostStore interface {
-	ListAll(c *gin.Context) ([]domain.Post, error)
-}
-
 // PostStore is implementation of post store
 type PostStore struct {
 	DB *gorm.DB

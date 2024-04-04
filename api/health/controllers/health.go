@@ -5,36 +5,30 @@ import (
 
 	"github.com/gin-gonic/gin"
 
-	"alan/blog/health/dao"
-	"alan/blog/health/services"
+	"alan/blog/health/domain"
 )
 
-var (
-	HealthService *services.HealthService
-)
-
-// HealthAPI is the interface for Health API
-type HealthAPI interface {
-	Retrieve(c *gin.Context)
-	ListAll(c *gin.Context)
+// IHealthService is the interface for Health service
+type IHealthService interface {
+	Retrieve(c *gin.Context) (domain.ApiInfo, error)
+	ListAll(c *gin.Context) ([]domain.ApiInfo, error)
 }
 
 // HealthController defines Health's controller
-type HealthController struct{}
-
-func init() {
-	HealthStore := dao.NewHealthStore()
-	HealthService = services.NewHealthService(HealthStore)
+type HealthController struct {
+	svc IHealthService
 }
 
-// NewHealthAPI defines api paths to Health service
-func NewHealthAPI() *HealthController {
-	return &HealthController{}
+// NewHealthController defines api paths to Health service
+func NewHealthController(svc IHealthService) HealthController {
+	return HealthController{
+		svc: svc,
+	}
 }
 
 // Retrieve Api Info
-func (u HealthController) Retrieve(c *gin.Context) {
-	apiInfo, err := HealthService.Retrieve(c)
+func (h *HealthController) Retrieve(c *gin.Context) {
+	apiInfo, err := h.svc.Retrieve(c)
 
 	if err != nil {
 		// TODO: use logrus
@@ -46,8 +40,8 @@ func (u HealthController) Retrieve(c *gin.Context) {
 	})
 }
 
-func (u HealthController) ListAll(c *gin.Context) {
-	apiInfos, err := HealthService.ListAll(c)
+func (h *HealthController) ListAll(c *gin.Context) {
+	apiInfos, err := h.svc.ListAll(c)
 
 	if err != nil {
 		// TODO: use logrus
