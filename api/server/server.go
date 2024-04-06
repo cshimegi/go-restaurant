@@ -7,6 +7,7 @@ import (
 	"github.com/gin-gonic/gin"
 
 	h "alan/blog/health"
+	m "alan/blog/middlewares"
 	p "alan/blog/posts"
 	u "alan/blog/users"
 )
@@ -16,7 +17,9 @@ var (
 )
 
 func main() {
-	engine := gin.Default()
+	engine := gin.New()
+	engine.Use(gin.Recovery())
+	engine.Use(m.JsonLoggerMiddleware())
 
 	u.InitRouters(engine)
 	p.InitRouters(engine)

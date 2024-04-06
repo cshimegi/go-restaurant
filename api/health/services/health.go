@@ -2,8 +2,9 @@ package services
 
 import (
 	"github.com/gin-gonic/gin"
-
-	"alan/blog/health/domain"
+	"github.com/sirupsen/logrus"
+	
+	"alan/blog/health/shared/domain"
 )
 
 // IHealthStore is interface of health store
@@ -15,12 +16,14 @@ type IHealthStore interface {
 // HealthService is implementation of user service
 type HealthService struct {
 	store IHealthStore
+	log   *logrus.Entry
 }
 
 // NewHealthService is implementation of user service
-func NewHealthService(store IHealthStore) *HealthService {
+func NewHealthService(store IHealthStore, log *logrus.Entry) *HealthService {
 	return &HealthService{
 		store: store,
+		log:   log,
 	}
 }
 
@@ -28,6 +31,7 @@ func NewHealthService(store IHealthStore) *HealthService {
 func (h *HealthService) Retrieve(c *gin.Context) (domain.ApiInfo, error) {
 	apiInfo, err := h.store.Retrieve(c)
 	if err != nil {
+		h.log.WithField("error", err).Error("Error retrieving api info")
 		return apiInfo, err
 	}
 	return apiInfo, nil
@@ -36,6 +40,7 @@ func (h *HealthService) Retrieve(c *gin.Context) (domain.ApiInfo, error) {
 func (h *HealthService) ListAll(c *gin.Context) ([]domain.ApiInfo, error) {
 	apiInfo, err := h.store.ListAll(c)
 	if err != nil {
+		h.log.WithField("error", err).Error("Error retrieving api info")
 		return apiInfo, err
 	}
 	return apiInfo, nil

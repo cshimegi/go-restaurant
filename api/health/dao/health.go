@@ -2,14 +2,16 @@ package dao
 
 import (
 	"github.com/gin-gonic/gin"
+	"github.com/sirupsen/logrus"
 	"gorm.io/gorm"
 
-	"alan/blog/health/domain"
+	"alan/blog/health/shared/domain"
 )
 
 // HealthStore is implementation of user store
 type HealthStore struct {
-	DB *gorm.DB
+	DB  *gorm.DB
+	log *logrus.Entry
 }
 
 func (h *HealthStore) Retrieve(c *gin.Context) (domain.ApiInfo, error) {

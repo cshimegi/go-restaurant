@@ -6,6 +6,7 @@ import (
 	"os"
 	"time"
 
+	"github.com/sirupsen/logrus"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 	"gorm.io/gorm/logger"
@@ -23,7 +24,7 @@ var (
 )
 
 // NewPostStore initiates db connection
-func NewPostStore() *PostStore {
+func NewPostStore(log *logrus.Entry) *PostStore {
 	db, err := gorm.Open(mysql.Open(dsn), &gorm.Config{
 		Logger: dbLogger(),
 	})
@@ -32,7 +33,8 @@ func NewPostStore() *PostStore {
 	}
 
 	return &PostStore{
-		DB: db,
+		DB:  db,
+		log: log,
 	}
 }
 

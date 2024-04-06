@@ -6,6 +6,7 @@ import (
 	"alan/blog/users/controllers"
 	"alan/blog/users/dao"
 	"alan/blog/users/services"
+	"alan/blog/users/shared/logger"
 )
 
 var (
@@ -17,9 +18,10 @@ const (
 )
 
 func init() {
-	store := dao.NewUserStore()
-	service := services.NewUserService(store)
-	controller = controllers.NewUserController(service)
+	log := logger.NewUserLogger()
+	store := dao.NewUserStore(log)
+	service := services.NewUserService(store, log)
+	controller = controllers.NewUserController(service, log)
 }
 
 func InitRouters(engine *gin.Engine) {

@@ -4,8 +4,9 @@ import (
 	"net/http"
 
 	"github.com/gin-gonic/gin"
+	"github.com/sirupsen/logrus"
 
-	"alan/blog/health/domain"
+	"alan/blog/health/shared/domain"
 )
 
 // IHealthService is the interface for Health service
@@ -17,12 +18,14 @@ type IHealthService interface {
 // HealthController defines Health's controller
 type HealthController struct {
 	svc IHealthService
+	log *logrus.Entry
 }
 
 // NewHealthController defines api paths to Health service
-func NewHealthController(svc IHealthService) HealthController {
+func NewHealthController(svc IHealthService, log *logrus.Entry) HealthController {
 	return HealthController{
 		svc: svc,
+		log: log,
 	}
 }
 
@@ -31,8 +34,8 @@ func (h *HealthController) Retrieve(c *gin.Context) {
 	apiInfo, err := h.svc.Retrieve(c)
 
 	if err != nil {
-		// TODO: use logrus
-		panic(err)
+		h.log.WithField("error", err).Error("Error retrieving api info")
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 	}
 
 	c.JSON(http.StatusOK, gin.H{
@@ -44,8 +47,8 @@ func (h *HealthController) ListAll(c *gin.Context) {
 	apiInfos, err := h.svc.ListAll(c)
 
 	if err != nil {
-		// TODO: use logrus
-		panic(err)
+		h.log.WithField("error", err).Error("Error listing api infos")
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 	}
 
 	c.JSON(http.StatusOK, gin.H{

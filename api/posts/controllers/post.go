@@ -1,11 +1,12 @@
 package controllers
 
 import (
-	"alan/blog/posts/shared/domain"
-	"fmt"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
+	"github.com/sirupsen/logrus"
+
+	"alan/blog/posts/shared/domain"
 )
 
 // IPostService is interface of post service
@@ -16,12 +17,14 @@ type IPostService interface {
 // PostController defines type of post controller
 type PostController struct {
 	svc IPostService
+	log *logrus.Entry
 }
 
 // NewPostController defines api paths to post service
-func NewPostController(svc IPostService) PostController {
+func NewPostController(svc IPostService, log *logrus.Entry) PostController {
 	return PostController{
 		svc: svc,
+		log: log,
 	}
 }
 
@@ -30,7 +33,8 @@ func (p *PostController) ListAll(c *gin.Context) {
 	posts, err := p.svc.ListAll(c)
 
 	if err != nil {
-		fmt.Println(err)
+		p.log.WithField("error", err).Error("Error listing posts")
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 	}
 
 	c.JSON(http.StatusOK, gin.H{

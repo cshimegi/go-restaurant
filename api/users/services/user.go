@@ -2,6 +2,7 @@ package services
 
 import (
 	"github.com/gin-gonic/gin"
+	"github.com/sirupsen/logrus"
 
 	"alan/blog/users/shared/domain"
 )
@@ -14,12 +15,14 @@ type IUserStore interface {
 // UserService is implementation of user service
 type UserService struct {
 	store IUserStore
+	log   *logrus.Entry
 }
 
 // NewUserService is implementation of user service
-func NewUserService(store IUserStore) *UserService {
+func NewUserService(store IUserStore, log *logrus.Entry) *UserService {
 	return &UserService{
 		store: store,
+		log:   log,
 	}
 }
 
@@ -27,7 +30,8 @@ func NewUserService(store IUserStore) *UserService {
 func (u *UserService) ListAll(c *gin.Context) ([]domain.User, error) {
 	users, err := u.store.ListAll(c)
 	if err != nil {
-		panic(err)
+		u.log.WithField("error", err).Error("failed to list all users")
+		return nil, err
 	}
 	return users, nil
 }
