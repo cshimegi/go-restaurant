@@ -6,6 +6,7 @@ import (
 	"os"
 	"time"
 
+	"github.com/sirupsen/logrus"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 	"gorm.io/gorm/logger"
@@ -23,16 +24,17 @@ var (
 )
 
 // NewHealthStore initiates db connection
-func NewHealthStore() *HealthStore {
+func NewHealthStore(log *logrus.Entry) *HealthStore {
 	db, err := gorm.Open(mysql.Open(dsn), &gorm.Config{
 		Logger: dbLogger(),
 	})
 	if err != nil {
-		log.Panicf("Got error when connect to database, the error is '%v'\n", err)
+		log.WithField("error", err).Panicf("Got error when connect to database, the error is '%v'\n", err)
 	}
 
 	return &HealthStore{
-		DB: db,
+		DB:  db,
+		log: log,
 	}
 }
 

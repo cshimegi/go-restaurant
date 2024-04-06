@@ -1,6 +1,7 @@
 package health
 
 import (
+	"alan/blog/health/shared/logger"
 	"github.com/gin-gonic/gin"
 
 	"alan/blog/health/controllers"
@@ -17,9 +18,10 @@ const (
 )
 
 func init() {
-	store := dao.NewHealthStore()
-	service := services.NewHealthService(store)
-	controller = controllers.NewHealthController(service)
+	log := logger.NewHealthLogger()
+	store := dao.NewHealthStore(log)
+	service := services.NewHealthService(store, log)
+	controller = controllers.NewHealthController(service, log)
 }
 
 func InitRouters(engine *gin.Engine) {

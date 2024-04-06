@@ -1,11 +1,12 @@
 package posts
 
 import (
-	"alan/blog/posts/dao"
-	"alan/blog/posts/services"
 	"github.com/gin-gonic/gin"
 
 	"alan/blog/posts/controllers"
+	"alan/blog/posts/dao"
+	"alan/blog/posts/services"
+	"alan/blog/users/shared/logger"
 )
 
 var (
@@ -17,9 +18,10 @@ const (
 )
 
 func init() {
-	store := dao.NewPostStore()
-	service := services.NewPostService(store)
-	controller = controllers.NewPostController(service)
+	log := logger.NewUserLogger()
+	store := dao.NewPostStore(log)
+	service := services.NewPostService(store, log)
+	controller = controllers.NewPostController(service, log)
 }
 
 func InitRouters(engine *gin.Engine) {
