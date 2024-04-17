@@ -1,12 +1,12 @@
 package health
 
 import (
-	"alan/blog/health/shared/logger"
+	"alan/restaurant/health/shared/logger"
 	"github.com/gin-gonic/gin"
 
-	"alan/blog/health/controllers"
-	"alan/blog/health/dao"
-	"alan/blog/health/services"
+	"alan/restaurant/health/controllers"
+	"alan/restaurant/health/dao"
+	"alan/restaurant/health/services"
 )
 
 var (

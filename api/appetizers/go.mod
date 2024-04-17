@@ -1,4 +1,4 @@
-module alan/blog/posts
+module alan/restaurant/appetizers
 
 go 1.22.1
 

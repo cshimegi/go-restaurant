@@ -23,8 +23,8 @@ var (
 	)
 )
 
-// NewPostStore initiates db connection
-func NewPostStore(log *logrus.Entry) *PostStore {
+// NewAppetizerStore initiates db connection
+func NewAppetizerStore(log *logrus.Entry) *AppetizerStore {
 	db, err := gorm.Open(mysql.Open(dsn), &gorm.Config{
 		Logger: dbLogger(),
 	})
@@ -32,7 +32,7 @@ func NewPostStore(log *logrus.Entry) *PostStore {
 		log.Panicf("Got error when connect to database, the error is '%v'\n", err)
 	}
 
-	return &PostStore{
+	return &AppetizerStore{
 		DB:  db,
 		log: log,
 	}

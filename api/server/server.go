@@ -6,10 +6,10 @@ import (
 
 	"github.com/gin-gonic/gin"
 
-	h "alan/blog/health"
-	m "alan/blog/middlewares"
-	p "alan/blog/posts"
-	u "alan/blog/users"
+	a "alan/restaurant/appetizers"
+	h "alan/restaurant/health"
+	m "alan/restaurant/middlewares"
+	u "alan/restaurant/users"
 )
 
 var (
@@ -22,7 +22,7 @@ func main() {
 	engine.Use(m.JsonLoggerMiddleware())
 
 	u.InitRouters(engine)
-	p.InitRouters(engine)
+	a.InitRouters(engine)
 	h.InitRouters(engine)
 
 	if err := engine.Run(port); err != nil {

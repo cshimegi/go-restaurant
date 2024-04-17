@@ -1,4 +1,4 @@
-module alan/blog/health
+module alan/restaurant/health
 
 go 1.22.1
 

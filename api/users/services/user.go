@@ -4,7 +4,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/sirupsen/logrus"
 
-	"alan/blog/users/shared/domain"
+	"alan/restaurant/users/shared/domain"
 )
 
 // IUserStore is interface of user store

@@ -5,7 +5,7 @@ import (
 	"github.com/sirupsen/logrus"
 	"gorm.io/gorm"
 
-	"alan/blog/health/shared/domain"
+	"alan/restaurant/health/shared/domain"
 )
 
 // HealthStore is implementation of user store

@@ -6,7 +6,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/sirupsen/logrus"
 
-	"alan/blog/health/shared/domain"
+	"alan/restaurant/health/shared/domain"
 )
 
 // IHealthService is the interface for Health service

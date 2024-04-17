@@ -1,4 +1,4 @@
-module alan/blog/server
+module alan/restaurant/server
 
 go 1.22.1
 

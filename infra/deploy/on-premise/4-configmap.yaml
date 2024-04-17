@@ -1,12 +1,12 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: blog-config
+  name: restaurant-config
 data:
   DB_ROOT_PASS: "ahfwLEenAasASddkf=="
   DB_PASS: "secret"
   DB_USER: "cshimegi"
-  DB_NAME: "blog"
+  DB_NAME: "restaurant"
   DB_LANG: "C.UTF-8"
-  DB_HOST: "blog-db-service"
+  DB_HOST: "restaurant-db-service"
   DB_PORT: "3306"

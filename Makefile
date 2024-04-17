@@ -1,16 +1,14 @@
 OWNER := cshimegi
-IMAGE := blog
+IMAGE := restaurant
 SEPARATOR := "====================================================================="
 GO_DOCKERFILE := ./api/Dockerfile
 DB_DOCKERFILE := ./infra/db/Dockerfile
-SERVICES := users posts
+SERVICES := users appetizers
 
 # Variables
-PLATFORM ?= linux/x86_64
 VERSION ?= latest
 PORT ?= 8080
 GO_VERSION ?=
-GOV ?=
 
 
 define check_var
@@ -21,7 +19,7 @@ define check_var
 endef
 
 define check_required_vars
-	$(call check_var, GOV)
+	$(call check_var, GO_VERSION)
 endef
 
 define now
@@ -35,7 +33,7 @@ endef
 help:
 	@ echo "Usage: make [target]"
 	@ echo "Targets:"
-	@ echo "  build-mono GO_VERSION=<required-go-version> PORT=<optional-port>"
+	@ echo "  build-api GO_VERSION=<required-go-version> PORT=<optional-port>"
 	@ echo "  help"
 
 
@@ -47,7 +45,7 @@ help:
 #	@ echo $(SEPARATOR)
 #	@ echo $(call now) "Start building db image"
 #	@ echo $(SEPARATOR)
-#	docker build --platform $(PLATFORM) -f $(DB_DOCKERFILE) -t $(OWNER)/$(IMAGE)-db:$(VERSION) .
+#	docker build -f $(DB_DOCKERFILE) -t $(OWNER)/$(IMAGE)-db:$(VERSION) .
 #	@ echo $(SEPARATOR)
 #	@ echo $(call now) "Done building service: [db]"
 #	@ echo $(SEPARATOR)
@@ -60,7 +58,6 @@ help:
 #	docker build --build-arg="GO_VERSION=$(GO_VERSION)" \
 #				--build-arg="SERVICE_NAME=$(@)" \
 #				--build-arg="PORT=$(PORT)" \
-#				--platform $(PLATFORM) \
 #				-f $(GO_DOCKERFILE) \
 #				-t $(OWNER)/$(IMAGE)-$@:$(VERSION) .
 #	@ echo $(SEPARATOR)
@@ -68,15 +65,15 @@ help:
 #	@ echo $(SEPARATOR)
 
 
-build-mono:
+build-api:
+	@ $(call check_required_vars)
 	@ echo $(SEPARATOR)
-	@ echo $(call now) "Start building mono image"
+	@ echo $(call now) "Start building api image"
 	@ echo $(SEPARATOR)
 	docker build --build-arg="GO_VERSION=$(GO_VERSION)" \
 				--build-arg="PORT=$(PORT)" \
-				--platform $(PLATFORM) \
 				-f $(GO_DOCKERFILE) \
-				-t $(OWNER)/$(IMAGE)-mono:$(VERSION) .
+				-t $(OWNER)/$(IMAGE)-api:$(VERSION) .
 	@ echo $(SEPARATOR)
-	@ echo $(call now) "Done building mono service"
+	@ echo $(call now) "Done building api service"
 	@ echo $(SEPARATOR)

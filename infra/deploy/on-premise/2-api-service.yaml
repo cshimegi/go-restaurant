@@ -1,21 +1,7 @@
-# apiVersion: v1
-# kind: Service
-# metadata:
-#   name: blog-post-service
-#   namespace: cshimegi-blog-local
-# spec:
-#   type: NodePort # A port is opened on each node in your cluster via Kube proxy.
-#   ports:
-#   - name: http
-#     port: 80
-#     targetPort: 8000
-#   selector:
-#     app: blog-post
-
 apiVersion: v1
 kind: Service
 metadata:
-  name: blog-api-service
+  name: restaurant-api-service
 spec:
   type: ClusterIP
   ports:
@@ -24,4 +10,4 @@ spec:
     targetPort: 8080
     protocol: TCP
   selector:
-    app: blog-api-deploy
+    app: restaurant-api-deploy

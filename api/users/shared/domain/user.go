@@ -1,7 +1,7 @@
 package domain
 
 import (
-	sm "alan/blog/shared/models"
+	sm "alan/restaurant/shared/models"
 )
 
 // User defines user model

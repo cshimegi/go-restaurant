@@ -5,7 +5,7 @@ import (
 	"github.com/sirupsen/logrus"
 	"gorm.io/gorm"
 
-	"alan/blog/users/shared/domain"
+	"alan/restaurant/users/shared/domain"
 )
 
 // UserStore is implementation of user store
