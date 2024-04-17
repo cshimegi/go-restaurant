@@ -1,4 +1,4 @@
-module alan/blog/middlewares
+module alan/restaurant/middlewares
 
 go 1.22.1
 

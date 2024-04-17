@@ -1,5 +1,5 @@
-# blog-go
-A backend API service built with Golang GIN framework for simple blog system.
+# go-restaurant
+A backend API service built with Golang GIN framework for simple restaurant system.
 It's a practice project for learning how to utilize the framework and other libraries to build
 a backend system.
 
@@ -32,8 +32,8 @@ $ docker-compose up -d
 # User API Endpoint
 $ curl -v http://localhost:<port>/api/users
 
-# Post API Endpoint
-$ curl -v http://localhost:<port>/api/posts
+# Appetizer API Endpoint
+$ curl -v http://localhost:<port>/api/appetizers
 
 # Health API Endpoint
 $ curl -v http://localhost:<port>/api/health
@@ -46,8 +46,8 @@ $ curl -v http://localhost:<port>/api/health/all
 # User API Endpoint
 $ curl -v http://localhost/api/users
 
-# Post API Endpoint
-$ curl -v http://localhost/api/posts
+# Appetizer API Endpoint
+$ curl -v http://localhost/api/appetizers
 
 # Health API Endpoint
 $ curl -v http://localhost/api/health

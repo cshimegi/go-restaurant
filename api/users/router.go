@@ -3,10 +3,10 @@ package users
 import (
 	"github.com/gin-gonic/gin"
 
-	"alan/blog/users/controllers"
-	"alan/blog/users/dao"
-	"alan/blog/users/services"
-	"alan/blog/users/shared/logger"
+	"alan/restaurant/users/controllers"
+	"alan/restaurant/users/dao"
+	"alan/restaurant/users/services"
+	"alan/restaurant/users/shared/logger"
 )
 
 var (

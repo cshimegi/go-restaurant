@@ -1,18 +1,18 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: cshimegi-blog-api
+  name: cshimegi-restaurant-api
   labels:
-    app: blog-api
+    app: restaurant-api
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: blog-api-deploy
+      app: restaurant-api-deploy
   template:
     metadata:
       labels:
-        app: blog-api-deploy
+        app: restaurant-api-deploy
     spec:
       initContainers:
         - name: wait-for-init-db
@@ -20,13 +20,13 @@ spec:
           command:
             - sh
             - -c
-            - "until nc -zv blog-db-service 3306; do sleep 5; done"
+            - "until nc -zv restaurant-db 3306; do sleep 5; done"
       containers:
-      - name: blog-post-deploy
-        image: cshimegi/blog-mono:latest
+      - name: restaurant-api
+        image: cshimegi/restaurant-api:latest
         imagePullPolicy: IfNotPresent
         ports:
           - containerPort: 8080
         envFrom:
         - configMapRef:
-            name: blog-config
+            name: restaurant-config
