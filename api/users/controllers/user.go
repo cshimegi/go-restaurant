@@ -6,23 +6,23 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/sirupsen/logrus"
 
-	"alan/restaurant/users/shared/domain"
+	"alan/restaurant/users/services"
 )
 
-// IUserService is the interface for user API
-type IUserService interface {
-	ListAll(c *gin.Context) ([]domain.User, error)
+// IUserController is the interface for user controller
+type IUserController interface {
+	ListAll(c *gin.Context)
 }
 
 // UserController defines user's controller
 type UserController struct {
-	svc IUserService
+	svc services.IUserService
 	log *logrus.Entry
 }
 
 // NewUserController defines api paths to user service
-func NewUserController(svc IUserService, log *logrus.Entry) UserController {
-	return UserController{
+func NewUserController(svc services.IUserService, log *logrus.Entry) IUserController {
+	return &UserController{
 		svc: svc,
 		log: log,
 	}
@@ -32,12 +32,11 @@ func NewUserController(svc IUserService, log *logrus.Entry) UserController {
 func (u *UserController) ListAll(c *gin.Context) {
 	users, err := u.svc.ListAll(c)
 
-	if err != nil {
-		u.log.WithField("error", err).Error("Error listing users")
-		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+	switch err.(type) {
+	case nil:
+		c.JSON(http.StatusOK, gin.H{"data": users})
+	default:
+		u.log.WithField("error", err.Error()).Error("Error listing users")
+		c.AbortWithStatusJSON(http.StatusInternalServerError, err.Error())
 	}
-
-	c.JSON(http.StatusOK, gin.H{
-		"data": users,
-	})
 }

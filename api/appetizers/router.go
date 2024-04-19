@@ -10,7 +10,7 @@ import (
 )
 
 var (
-	controller controllers.AppetizerController
+	controller controllers.IAppetizerController
 )
 
 const (

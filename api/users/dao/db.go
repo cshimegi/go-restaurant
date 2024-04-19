@@ -6,10 +6,13 @@ import (
 	"os"
 	"time"
 
+	"github.com/gin-gonic/gin"
 	"github.com/sirupsen/logrus"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 	"gorm.io/gorm/logger"
+
+	"alan/restaurant/users/shared/domain"
 )
 
 var (
@@ -23,8 +26,13 @@ var (
 	)
 )
 
+// IUserStore is interface of user store
+type IUserStore interface {
+	ListAll(c *gin.Context) ([]domain.User, error)
+}
+
 // NewUserStore initiates db connection
-func NewUserStore(log *logrus.Entry) *UserStore {
+func NewUserStore(log *logrus.Entry) IUserStore {
 	db, err := gorm.Open(mysql.Open(dsn), &gorm.Config{
 		Logger: dbLogger(),
 	})
