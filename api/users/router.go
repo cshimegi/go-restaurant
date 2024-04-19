@@ -10,7 +10,7 @@ import (
 )
 
 var (
-	controller controllers.UserController
+	controller controllers.IUserController
 )
 
 const (

@@ -4,22 +4,23 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/sirupsen/logrus"
 
+	"alan/restaurant/users/dao"
 	"alan/restaurant/users/shared/domain"
 )
 
-// IUserStore is interface of user store
-type IUserStore interface {
+// IUserService is the interface for user API
+type IUserService interface {
 	ListAll(c *gin.Context) ([]domain.User, error)
 }
 
 // UserService is implementation of user service
 type UserService struct {
-	store IUserStore
+	store dao.IUserStore
 	log   *logrus.Entry
 }
 
 // NewUserService is implementation of user service
-func NewUserService(store IUserStore, log *logrus.Entry) *UserService {
+func NewUserService(store dao.IUserStore, log *logrus.Entry) IUserService {
 	return &UserService{
 		store: store,
 		log:   log,

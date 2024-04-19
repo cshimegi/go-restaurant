@@ -6,10 +6,13 @@ import (
 	"os"
 	"time"
 
+	"github.com/gin-gonic/gin"
 	"github.com/sirupsen/logrus"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 	"gorm.io/gorm/logger"
+
+	"alan/restaurant/appetizers/shared/domain"
 )
 
 var (
@@ -23,8 +26,13 @@ var (
 	)
 )
 
+// IAppetizerStore is interface of appetizer store
+type IAppetizerStore interface {
+	ListAll(c *gin.Context) ([]domain.Appetizer, error)
+}
+
 // NewAppetizerStore initiates db connection
-func NewAppetizerStore(log *logrus.Entry) *AppetizerStore {
+func NewAppetizerStore(log *logrus.Entry) IAppetizerStore {
 	db, err := gorm.Open(mysql.Open(dsn), &gorm.Config{
 		Logger: dbLogger(),
 	})

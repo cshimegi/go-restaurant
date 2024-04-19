@@ -6,23 +6,22 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/sirupsen/logrus"
 
-	"alan/restaurant/appetizers/shared/domain"
+	"alan/restaurant/appetizers/services"
 )
 
-// IAppetizerService is interface of post service
-type IAppetizerService interface {
-	ListAll(c *gin.Context) ([]domain.Appetizer, error)
+type IAppetizerController interface {
+	ListAll(c *gin.Context)
 }
 
 // AppetizerController defines type of post controller
 type AppetizerController struct {
-	svc IAppetizerService
+	svc services.IAppetizerService
 	log *logrus.Entry
 }
 
 // NewAppetizerController defines api paths to post service
-func NewAppetizerController(svc IAppetizerService, log *logrus.Entry) AppetizerController {
-	return AppetizerController{
+func NewAppetizerController(svc services.IAppetizerService, log *logrus.Entry) IAppetizerController {
+	return &AppetizerController{
 		svc: svc,
 		log: log,
 	}
@@ -32,12 +31,11 @@ func NewAppetizerController(svc IAppetizerService, log *logrus.Entry) AppetizerC
 func (a *AppetizerController) ListAll(c *gin.Context) {
 	appetizers, err := a.svc.ListAll(c)
 
-	if err != nil {
-		a.log.WithField("error", err).Error("Error listing appetizers")
-		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+	switch err.(type) {
+	case nil:
+		c.JSON(http.StatusOK, gin.H{"data": appetizers})
+	default:
+		a.log.WithField("error", err.Error()).Error("Error listing appetizers")
+		c.AbortWithStatusJSON(http.StatusInternalServerError, err.Error())
 	}
-
-	c.JSON(http.StatusOK, gin.H{
-		"data": appetizers,
-	})
 }
