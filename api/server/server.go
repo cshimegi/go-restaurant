@@ -20,6 +20,7 @@ func main() {
 	engine := gin.New()
 	engine.Use(gin.Recovery())
 	engine.Use(m.JsonLoggerMiddleware())
+	engine.Use(m.CorsMiddleware())
 
 	u.InitRouters(engine)
 	a.InitRouters(engine)
