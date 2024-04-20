@@ -27,6 +27,10 @@ func init() {
 func InitRouters(engine *gin.Engine) {
 	group := engine.Group(apiPathPrefix)
 	{
+		group.POST("", controller.Create)
 		group.GET("", controller.ListAll)
+		group.GET("/:id", controller.GetById)
+		group.PATCH("/:id", controller.PatchById)
+		group.DELETE("/:id", controller.DeleteById)
 	}
 }

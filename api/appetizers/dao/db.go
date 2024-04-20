@@ -28,7 +28,11 @@ var (
 
 // IAppetizerStore is interface of appetizer store
 type IAppetizerStore interface {
+	Create(c *gin.Context, appetizer domain.Appetizer) (*domain.Appetizer, error)
 	ListAll(c *gin.Context) ([]domain.Appetizer, error)
+	GetById(c *gin.Context, id uint) (*domain.Appetizer, error)
+	PatchById(c *gin.Context, id uint, appetizer domain.Appetizer) (*domain.Appetizer, error)
+	DeleteById(c *gin.Context, id uint) error
 }
 
 // NewAppetizerStore initiates db connection

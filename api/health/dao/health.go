@@ -14,20 +14,26 @@ type HealthStore struct {
 	log *logrus.Entry
 }
 
-func (h *HealthStore) Retrieve(c *gin.Context) (domain.ApiInfo, error) {
-	var apiInfo domain.ApiInfo
-	result := h.DB.Order("release_at desc").First(&apiInfo)
-	if result.Error != nil {
-		return apiInfo, result.Error
+func (h *HealthStore) GetLatest(c *gin.Context) (*domain.ApiInfo, error) {
+	var apiInfo *domain.ApiInfo
+	result := h.DB.Last(&apiInfo)
+
+	switch {
+	case result.Error == nil:
+		return apiInfo, nil
+	default:
+		return nil, result.Error
 	}
-	return apiInfo, nil
 }
 
 func (h *HealthStore) ListAll(c *gin.Context) ([]domain.ApiInfo, error) {
 	var apiInfos []domain.ApiInfo
 	result := h.DB.Find(&apiInfos)
-	if result.Error != nil {
-		return apiInfos, result.Error
+
+	switch {
+	case result.Error == nil:
+		return apiInfos, nil
+	default:
+		return nil, result.Error
 	}
-	return apiInfos, nil
 }

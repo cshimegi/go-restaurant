@@ -4,44 +4,51 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/sirupsen/logrus"
 
+	"alan/restaurant/health/dao"
 	"alan/restaurant/health/shared/domain"
 )
 
-// IHealthStore is interface of health store
-type IHealthStore interface {
-	Retrieve(c *gin.Context) (domain.ApiInfo, error)
+// IHealthService is the interface for Health service
+type IHealthService interface {
+	GetLatest(c *gin.Context) (*domain.ApiInfo, error)
 	ListAll(c *gin.Context) ([]domain.ApiInfo, error)
 }
 
 // HealthService is implementation of user service
 type HealthService struct {
-	store IHealthStore
+	store dao.IHealthStore
 	log   *logrus.Entry
 }
 
 // NewHealthService is implementation of user service
-func NewHealthService(store IHealthStore, log *logrus.Entry) *HealthService {
+func NewHealthService(store dao.IHealthStore, log *logrus.Entry) IHealthService {
 	return &HealthService{
 		store: store,
 		log:   log,
 	}
 }
 
-// Retrieve Api Information
-func (h *HealthService) Retrieve(c *gin.Context) (domain.ApiInfo, error) {
-	apiInfo, err := h.store.Retrieve(c)
-	if err != nil {
-		h.log.WithField("error", err).Error("Error retrieving api info")
+// GetLatest Api Information
+func (h *HealthService) GetLatest(c *gin.Context) (*domain.ApiInfo, error) {
+	apiInfo, err := h.store.GetLatest(c)
+
+	switch {
+	case err == nil:
+		return apiInfo, nil
+	default:
+		h.log.WithField("error", err.Error()).Error("Error getting latest api info")
 		return apiInfo, err
 	}
-	return apiInfo, nil
 }
 
 func (h *HealthService) ListAll(c *gin.Context) ([]domain.ApiInfo, error) {
 	apiInfo, err := h.store.ListAll(c)
-	if err != nil {
-		h.log.WithField("error", err).Error("Error retrieving api info")
+
+	switch {
+	case err == nil:
+		return apiInfo, nil
+	default:
+		h.log.WithField("error", err.Error()).Error("Error listing all api infos")
 		return apiInfo, err
 	}
-	return apiInfo, nil
 }
