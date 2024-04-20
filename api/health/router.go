@@ -1,16 +1,16 @@
 package health
 
 import (
-	"alan/restaurant/health/shared/logger"
 	"github.com/gin-gonic/gin"
 
 	"alan/restaurant/health/controllers"
 	"alan/restaurant/health/dao"
 	"alan/restaurant/health/services"
+	"alan/restaurant/health/shared/logger"
 )
 
 var (
-	controller controllers.HealthController
+	controller controllers.IHealthController
 )
 
 const (
@@ -27,7 +27,7 @@ func init() {
 func InitRouters(engine *gin.Engine) {
 	group := engine.Group(apiPathPrefix)
 	{
-		group.GET("", controller.Retrieve)
+		group.GET("", controller.GetLatest)
 		group.GET("/all", controller.ListAll)
 	}
 }

@@ -28,7 +28,11 @@ var (
 
 // IUserStore is interface of user store
 type IUserStore interface {
+	Create(c *gin.Context, user domain.User) (*domain.User, error)
 	ListAll(c *gin.Context) ([]domain.User, error)
+	GetById(c *gin.Context, id uint) (*domain.User, error)
+	PatchById(c *gin.Context, id uint, user domain.User) (*domain.User, error)
+	DeleteById(c *gin.Context, id uint) error
 }
 
 // NewUserStore initiates db connection

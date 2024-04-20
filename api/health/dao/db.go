@@ -6,10 +6,13 @@ import (
 	"os"
 	"time"
 
+	"github.com/gin-gonic/gin"
 	"github.com/sirupsen/logrus"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 	"gorm.io/gorm/logger"
+
+	"alan/restaurant/health/shared/domain"
 )
 
 var (
@@ -22,6 +25,12 @@ var (
 		os.Getenv("DB_NAME"),
 	)
 )
+
+// IHealthStore is interface of health store
+type IHealthStore interface {
+	GetLatest(c *gin.Context) (*domain.ApiInfo, error)
+	ListAll(c *gin.Context) ([]domain.ApiInfo, error)
+}
 
 // NewHealthStore initiates db connection
 func NewHealthStore(log *logrus.Entry) *HealthStore {
